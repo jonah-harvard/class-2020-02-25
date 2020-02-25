@@ -1,0 +1,27 @@
+---
+title: "sampling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+```{r}
+roll_one_die <- function() {
+  sample(1:6, 1, replace = TRUE)
+}
+
+roll_n_dice <- function(n) {
+  sample(1:6, n, replace = TRUE)
+}
+
+roll_2_dice <- function() {sum(roll_n_dice(2))}
+
+random_rolls <- map_int(1:1000, ~ roll_2_dice())
+data <- tibble(rolls = random_rolls)
+
+ggplot(data, aes(as_factor(random_rolls))) + geom_bar()
+```
+
